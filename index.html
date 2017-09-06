@@ -1,0 +1,138 @@
+<!-- This is the corresponding "starter code" for 04_Hello Map in Udacity and Google's Maps
+API Course, Lesson 1 -->
+<html>
+ <head>
+ <!-- styles put here, but you can include a CSS file and reference it instead! -->
+   <style type="text/css">
+     html, body { height: 100%; margin: 0; padding: 0; }
+     .container {
+        height: 100%;
+        position: relative;
+      }
+
+      input {
+        font-size: 12px;
+      }
+
+      h1 {
+        color: #525454;
+        font-size: 22px;
+        margin: 0 0 10px 0;
+        text-align: center;
+      }
+
+      #hide-listings,
+      #show-listings {
+        width: 48%;
+      }
+
+      #map {
+        bottom:0px;
+        height: 100%;
+        left: 362px;
+        position: absolute;
+        right: 0px;
+      }
+
+      .options-box {
+        background: #fff;
+        border: 1px solid #999;
+        border-radius: 3px;
+        height: 100%;
+        line-height: 35px;
+        padding: 10px 10px 30px 10px;
+        text-align: left;
+        width: 340px;
+      }
+   </style>
+ </head>
+ <body>
+ <div class="container">
+   <div class="options-box">
+      <h1>Find your NYC home!</h1>
+     <div>
+       <input type="button" id="show-listings" value="show Listings">
+       <input type="button" id="hide-listings" value="hide Listings">
+     </div>
+   </div>
+   <div id="map"></div>
+ </div>
+
+   <script>
+      var map;
+      var markers=[];
+     function initMap() {
+       // TODO: use a constructor to create a new map JS object. You can use the coordinates
+       // we used, 40.7413549, -73.99802439999996 or your own!
+       map=new google.maps.Map(document.getElementById('map'),{
+        center: {lat: 40.7413549, lng: -73.99802439999996},
+        zoom: 13,
+        mapTypeControl: false
+       });
+
+       var locations = [
+          {title: 'Park Ave Penthouse', location: {lat: 40.7713024, lng: -73.9632393}},
+          {title: 'Chelsea Loft', location: {lat: 40.7444883, lng: -73.9949465}},
+          {title: 'Union Square Open Floor Plan', location: {lat: 40.7347062, lng: -73.9895759}},
+          {title: 'East Village Hip Studio', location: {lat: 40.7281777, lng: -73.984377}},
+          {title: 'TriBeCa Artsy Bachelor Pad', location: {lat: 40.7195264, lng: -74.0089934}},
+          {title: 'Chinatown Homey Space', location: {lat: 40.7180628, lng: -73.9961237}}
+        ];
+
+        var largeInfowindow = new google.maps.InfoWindow();
+
+        // The following group uses the location array to create an array of markers on initialize.
+        for (var i = 0; i < locations.length; i++) {
+          // Get the position from the location array.
+          var position = locations[i].location;
+          var title = locations[i].title;
+          // Create a marker per location, and put into markers array.
+           var marker = new google.maps.Marker({
+            position: position,
+            title: title,
+            animation: google.maps.Animation.DROP,
+            id: i
+          });
+          // Push the marker to our array of markers.
+          markers.push(marker);
+          // Create an onclick event to open an infowindow at each marker.
+          marker.addListener('click', function() {
+            populateInfoWindow(this, largeInfowindow);
+          });
+        }
+        document.getElementById('show-listings').addEventListener('click', showListings);
+        document.getElementById('hide-listings').addEventListener('click', hideListings);
+      }
+     function populateInfoWindow(marker,infowindow){
+      if(infowindow.marker!=marker){
+        infowindow.marker=marker;
+        infowindow.setContent('<div>'+marker.title+'</div>');
+        infowindow.open(map,marker);
+        infowindow.addListener('closeclick',function(){
+          infowindow.marker=null;
+        });
+      }
+     }
+
+     function showListings() {
+        var bounds = new google.maps.LatLngBounds();
+        // Extend the boundaries of the map for each marker and display the marker
+        for (var i = 0; i < markers.length; i++) {
+          markers[i].setMap(map);
+          bounds.extend(markers[i].position);
+        }
+        map.fitBounds(bounds);
+      }
+     function hideListings(){
+      for(var i=0;i<markers.length;i++){
+        markers[i].setMap(null);
+      }
+     }
+   </script>
+
+   <script async defer
+      src='https://maps.googleapis.com/maps/api/js?key=AIzaSyAREfcIaFiSSJ81sB884G9GvdNqp6Y_FjE&v=3&callback=initMap'
+      >
+   </script>
+ </body>
+</html>
