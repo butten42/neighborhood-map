@@ -1,5 +1,5 @@
 var map;
-var markers = [];
+var markers = ko.observableArray([]);
 var locations = [{
       title: 'Shenzhen Library of Science and Technology',
       address: "中国广东省深圳市南山区丽水路",
@@ -74,7 +74,6 @@ function initMap() {
   });
 
   var largeInfowindow = new google.maps.InfoWindow();
-  var bounds = new google.maps.LatLngBounds();
 
   for (var i = 0; i < locations.length; i++) {
     var position = locations[i].location;
@@ -86,15 +85,14 @@ function initMap() {
       animation: google.maps.Animation.DROP,
       id: placeId
     });
-    marker.setMap(map);
-    bounds.extend(marker.position);
-    markers.push(marker);
+
+    markers().push(marker);
 
     marker.addListener('click', function () {
       populateInfoWindow(this, largeInfowindow);
     });
   }
-  map.fitBounds(bounds);
+  showListings();
 }
 
 function populateInfoWindow(marker, infowindow) {
@@ -139,10 +137,18 @@ function populateInfoWindow(marker, infowindow) {
     }
   });
 }
-
+function showListings() {
+        var bounds = new google.maps.LatLngBounds();
+        // Extend the boundaries of the map for each marker and display the marker
+        for (var i = 0; i < markers().length; i++) {
+          markers()[i].setMap(map);
+          bounds.extend(markers()[i].position);
+        }
+        map.fitBounds(bounds);
+      }
 function hideListings() {
-  for (var i = 0; i < markers.length; i++) {
-    markers[i].setMap(null);
+  for (var i = 0; i < markers().length; i++) {
+    markers()[i].setMap(null);
   }
 }
 

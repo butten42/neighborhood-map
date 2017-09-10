@@ -21,10 +21,20 @@ var ViewModel = function(){
     locations.forEach(function(item){
         self.locationList.push(new Location(item));
     });
-    this.currentLocation=ko.observable(this.locationList()[0]);
     this.setLocation=function(clicked){
-        self.currentLocation(clicked);
+        console.log(clicked);
     }
+    /*this.query=ko.observable('');
+    self.markers = ko.dependentObservable(function() {
+    var search = this.query().toLowerCase();
+    ko.utils.arrayFilter(markers, function(marker) {
+    if (marker.title.toLowerCase().indexOf(search) >= 0) {
+            return marker.visible(true);
+        } else {
+            return marker.visible(false);
+        }
+    });
+}, viewModel);*/
 }
 ko.applyBindings(new ViewModel());
 /* abandened
