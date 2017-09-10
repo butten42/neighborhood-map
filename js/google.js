@@ -1,119 +1,148 @@
 var map;
 var markers = [];
+var locations = [{
+      title: 'Shenzhen Library of Science and Technology',
+      address: "中国广东省深圳市南山区丽水路",
+      tel: '0755 2603 2921',
+      location: {
+        lat: 22.5922326,
+        lng: 113.9706436
+      },
+      placeId: 'ChIJlck5HozyAzQRlmYOSLbOQE4'
+    },
+    {
+      title: 'Zoo',
+      address: '中国广东省深圳市南山区西丽路',
+      tel: '0755 2662 2888',
+      location: {
+        lat: 22.5923205,
+        lng: 113.9646499
+      },
+      placeId: 'ChIJw33RSpLyAzQRonD4xuEQczQ'
+    },
+    {
+      title: 'The metro',
+      address: "中国广东省深圳市南山区雨水路",
+      tel: '0755 2603 2955',
+      location: {
+        lat: 22.581893,
+        lng: 113.9629383
+      },
+      placeId: 'ChIJlck5HozyAzQRlmYOSLbOQE4'
+    },
+    {
+      title: 'Liao',
+      address: "中国广东省深圳市南山区贵喵路",
+      tel: '0755 2603 2921',
+      location: {
+        lat: 22.5831015,
+        lng: 113.9642472
+      },
+      placeId: 'ChIJtegeoRXuAzQRQi9n4dn9w-0'
+    },
+    {
+      title: 'The house of noodles',
+      address: "中国广东省深圳市南山区格于路",
+      tel: '0755 8240 1720',
+      location: {
+        lat: 22.5859439,
+        lng: 113.967487
+      },
+      placeId: 'ChIJ4X1Eeqn1AzQRju9J1yD0-Zc'
+    },
+    {
+      title: 'A hotel I never been',
+      address: "中国广东省深圳市南山区打的路",
+      tel: '0755 2866 5555',
+      location: {
+        lat: 22.585762,
+        lng: 113.9639131
+      },
+      placeId: 'ChIJr5fS66t1BDQR8dpM0UXx7r8'
+    }
+  ];
 
-function initMap() {}
-map = new google.maps.Map(document.getElementById('map'), {
-  center: {
+function initMap() {
+  var SZ = {
     lat: 22.5549176,
     lng: 113.7736861
-  },
-  zoom: 13,
-  mapTypeControl: false
-});
-var locations = [{
-    title: 'Shenzhen Library of Science and Technology',
-    location: {
-      lat: 22.5922326,
-      lng: 113.9706436
-    }
-  },
-  {
-    title: 'Zoo',
-    location: {
-      lat: 22.5923205,
-      lng: 113.9646499
-    }
-  },
-  {
-    title: 'The metro',
-    location: {
-      lat: 22.581893,
-      lng: 113.9629383
-    }
-  },
-  {
-    title: 'Liao',
-    location: {
-      lat: 22.5831015,
-      lng: 113.9642472
-    }
-  },
-  {
-    title: 'The house of noodles',
-    location: {
-      lat: 22.5859439,
-      lng: 113.967487
-    }
-  },
-  {
-    title: 'A hotel I never been',
-    location: {
-      lat: 22.585762,
-      lng: 113.9639131
-    }
-  }
-];
+  };
+  map = new google.maps.Map(document.getElementById('map'), {
+    zoom: 10,
+    mapTypeControl: false,
+    center: SZ
+  });
 
-var largeInfowindow = new google.maps.InfoWindow();
-for (var i = 0; i < locations.length; i++) {
-  // Get the position from the location array.
-  var position = locations[i].location;
-  var title = locations[i].title;
-  // Create a marker per location, and put into markers array.
-  var marker = new google.maps.Marker({
-    position: position,
-    title: title,
-    animation: google.maps.Animation.DROP,
-    icon: defaultIcon,
-    id: i
-  });
-  // Push the marker to our array of markers.
-  markers.push(marker);
-  // Create an onclick event to open the large infowindow at each marker.
-  marker.addListener('click', function () {
-    populateInfoWindow(this, largeInfowindow);
-  });
+  var largeInfowindow = new google.maps.InfoWindow();
+  var bounds = new google.maps.LatLngBounds();
+
+  for (var i = 0; i < locations.length; i++) {
+    var position = locations[i].location;
+    var title = locations[i].title;
+    var placeId = locations[i].placeId;
+    var marker = new google.maps.Marker({
+      position: position,
+      title: title,
+      animation: google.maps.Animation.DROP,
+      id: placeId
+    });
+    marker.setMap(map);
+    bounds.extend(marker.position);
+    markers.push(marker);
+
+    marker.addListener('click', function () {
+      populateInfoWindow(this, largeInfowindow);
+    });
+  }
+  map.fitBounds(bounds);
 }
 
 function populateInfoWindow(marker, infowindow) {
-  // Check to make sure the infowindow is not already opened on this marker.
-  if (infowindow.marker != marker) {
-    // Clear the infowindow content to give the streetview time to load.
-    infowindow.setContent('');
-    infowindow.marker = marker;
-    // Make sure the marker property is cleared if the infowindow is closed.
-    infowindow.addListener('closeclick', function () {
-      infowindow.marker = null;
-    });
-    var streetViewService = new google.maps.StreetViewService();
-    var radius = 50;
-    // In case the status is OK, which means the pano was found, compute the
-    // position of the streetview image, then calculate the heading, then get a
-    // panorama from that and set the options
-    function getStreetView(data, status) {
-      if (status == google.maps.StreetViewStatus.OK) {
-        var nearStreetViewLocation = data.location.latLng;
-        var heading = google.maps.geometry.spherical.computeHeading(
-          nearStreetViewLocation, marker.position);
-        infowindow.setContent('<div>' + marker.title + '</div><div id="pano"></div>');
-        var panoramaOptions = {
-          position: nearStreetViewLocation,
-          pov: {
-            heading: heading,
-            pitch: 30
-          }
-        };
-        var panorama = new google.maps.StreetViewPanorama(
-          document.getElementById('pano'), panoramaOptions);
-      } else {
-        infowindow.setContent('<div>' + marker.title + '</div>' +
-          '<div>No Street View Found</div>');
+  var service = new google.maps.places.PlacesService(map);
+  service.getDetails({
+    placeId: marker.id
+  }, function (place, status) {
+    if (status === google.maps.places.PlacesServiceStatus.OK) {
+      // Set the marker property on this infowindow so it isn't created again.
+      infowindow.marker = marker;
+      var innerHTML = '<div><div>' + marker.title + '</div>';
+
+      if (place.formatted_address) {
+        innerHTML += '<br>' + place.formatted_address;
       }
+      if (place.formatted_phone_number) {
+            innerHTML += '<br>' + place.formatted_phone_number;
+          }
+      if (place.opening_hours) {
+        innerHTML += '<br><br><strong>Hours:</strong><br>' +
+          place.opening_hours.weekday_text[0] + '<br>' +
+          place.opening_hours.weekday_text[1] + '<br>' +
+          place.opening_hours.weekday_text[2] + '<br>' +
+          place.opening_hours.weekday_text[3] + '<br>' +
+          place.opening_hours.weekday_text[4] + '<br>' +
+          place.opening_hours.weekday_text[5] + '<br>' +
+          place.opening_hours.weekday_text[6];
+      }
+      if (place.photos) {
+        innerHTML += '<br><br><img src="' + place.photos[0].getUrl({
+          maxHeight: 100,
+          maxWidth: 200
+        }) + '">';
+      }
+      innerHTML += '</div>';
+      infowindow.setContent(innerHTML);
+      infowindow.open(map, marker);
+      // Make sure the marker property is cleared if the infowindow is closed.
+      infowindow.addListener('closeclick', function () {
+        infowindow.marker = null;
+      });
     }
-    // Use streetview service to get the closest streetview image within
-    // 50 meters of the markers position
-    streetViewService.getPanoramaByLocation(marker.position, radius, getStreetView);
-    // Open the infowindow on the correct marker.
-    infowindow.open(map, marker);
+  });
+}
+
+function hideListings() {
+  for (var i = 0; i < markers.length; i++) {
+    markers[i].setMap(null);
   }
 }
+

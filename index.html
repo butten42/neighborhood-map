@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html>
    <head>
-      <title>I don't have a neighborhood via google map</title>
+      <title>Neighborhood  map</title>
+      <meta name="viewport" content="initial-scale=1.0">
+      <meta charset="utf-8">
       <link rel="stylesheet" href="css/bootstrap.min.css">
       <style>
-         #options-box{
-         border: 1px solid black;
-         }
+
          .modal-dialog {
          border: transparent;
          }
@@ -19,18 +19,25 @@
          color: white;
          }
          #map {
-         bottom:0px;
          height: 100%;
+         top: 54px;
+         bottom: 0px;
+          position: absolute;
+          right: 0px;
+          left: 0;
          }
          #place-box {
          background: #4caf50;
-         border: 1px solid #999;
          border-radius: 3px;
          text-align: left;
          width: 300px;
-         height: 100%;
-         margin-top: 5px;
          color: white;
+         z-index: 2;
+         position: relative;
+         }
+         #searchText{
+          color: black;
+          width: 80%;
          }
          #toggleButton{
          padding: 9px 10px;
@@ -56,6 +63,20 @@
          .wrap{
           margin-left: 10px;
          }
+         ul{
+          list-style-type: none;
+          padding-left: 0;
+         }
+         li{
+          margin-top: 10px;
+          border-bottom: 1px solid #ebe8de;
+         }
+         li:hover{
+          background-color: #cbe6a3;
+         }
+         h2{
+          margin-top: 0;
+         }
       </style>
    </head>
    <body>
@@ -71,8 +92,16 @@
         <h2>Neighborhood Map</h2>
          <input type="text" placeholder="search locations..." id="searchText">
          <!--<input type="button" value="search" id="search">-->
-         <ul class="list"></ul>
-      </div></div>
+         <ul id="list" data-bind='foreach: locationList'>
+           <li data-bind='click: $parent.setLocation'>
+             <strong><p data-bind='text: title'></p></strong>
+             <span>TEL:</span>
+             <span data-bind='text: tel'></span>
+             <p data-bind='text: address'></p>
+           </li>
+         </ul>
+        </div>
+      </div>
       <div id="map"></div>
       <div id="iconModal" class="modal fade">
          <div class="modal-dialog modal-sm">
@@ -92,15 +121,15 @@
          </div>
          <!-- /.modal-dialog -->
       </div>
-    <script src="js/google.js"></script>
-
-         <script src='js/lib/jquery.min.js'></script>
-
-      <script src='js/lib/bootstrap.min.js'></script>
-      <script src='js/main.js'></script>
-      <script async defer
+<script async defer
          src=
-         "https://maps.googleapis.com/maps/api/js?libraries=places,geometry&key=AIzaSyAREfcIaFiSSJ81sB884G9GvdNqp6Y_FjE&v=3&callback=initMap">
+         "https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyAREfcIaFiSSJ81sB884G9GvdNqp6Y_FjE&v=3&callback=initMap">
          </script>
+    <script src='js/lib/jquery.min.js'></script>
+    <script src='js/lib/knockout-3.2.0.js'></script>
+    <script src='js/lib/bootstrap.min.js'></script>
+  <script src="js/google.js"></script>
+    <script src='js/main.js'></script>
+
    </body>
 </html>
