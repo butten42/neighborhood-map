@@ -18,7 +18,7 @@
       <div id="place-box" class='collapse'>
         <div class="wrap">
         <h2>Neighborhood Map</h2>
-         <input type="text" placeholder="search locations..." id="searchText">
+         <input type="text" placeholder="search locations..." id="searchText" data-bind="textInput: query">
          <ul id="list" data-bind='foreach: locationList'>
            <li data-bind='click: $parent.setLocation'>
              <strong><p data-bind='text: title'></p></strong>
@@ -48,15 +48,9 @@
          </div>
          <!-- /.modal-dialog -->
       </div>
-
-<script async defer
-         src=
-         "https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyAREfcIaFiSSJ81sB884G9GvdNqp6Y_FjE&v=3&callback=initMap">
-         </script>
     <script src='js/lib/jquery.min.js'></script>
     <script src='js/lib/knockout-3.2.0.js'></script>
     <script src='js/lib/bootstrap.min.js'></script>
-  <script src="js/google.js"></script>
     <script src='js/main.js'></script>
 
    </body>
