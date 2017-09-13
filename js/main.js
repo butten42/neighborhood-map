@@ -87,6 +87,7 @@ var Location=function(data){
     this.tel= data.tel;
     this.address=data.address;
     this.marker=data.marker;
+    this.match=data.match;
 }
 
 var ViewModel = function(){
@@ -103,9 +104,9 @@ var ViewModel = function(){
     var q = self.query().toLowerCase();
     return ko.utils.arrayFilter(locations, function(item) {
       if (item.title.toLowerCase().indexOf(q) >= 0) {
-            return item.setVisible(true);
+            return item.match(true);
         } else {
-            return item.setVisible(false);
+            return item.match(false);
         }
     });
   });

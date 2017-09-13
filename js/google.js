@@ -23,6 +23,7 @@ function initMap() {
       id: placeId
     });
      locations[i].marker=marker;
+     locations[i].match=ko.observable('');
     markers.push(marker);
     marker.addListener('click', function () {
       populateInfoWindow(this, largeInfowindow);

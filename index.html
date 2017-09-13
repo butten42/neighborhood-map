@@ -20,7 +20,7 @@
         <h2>Neighborhood Map</h2>
          <input type="text" placeholder="search locations..." id="searchText" data-bind="textInput: query">
          <ul id="list" data-bind='foreach: locationList'>
-           <li data-bind='click: $parent.setLocation'>
+           <li data-bind='click: $parent.setLocation,visible: match'>
              <strong><p data-bind='text: title'></p></strong>
              <span>TEL:</span>
              <span data-bind='text: tel'></span>
