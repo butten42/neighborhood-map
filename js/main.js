@@ -102,9 +102,8 @@ var ViewModel = function(){
 }
 var url="http://www.sojson.com/open/api/weather/json.shtml?city=深圳";
 
-$.ajax({
+/*$.ajax({
         url: url,
-
         dataType: "jsonp"
     }).done(function(response){
   var data=response.data;
@@ -116,4 +115,15 @@ $.ajax({
   $('#weather').text(weather);
   $('#quality').text(quality);
   $('#temperature').text(temperature);
-    })
+    })*/
+$.getJSON(url,function(response){
+var data=response.data;
+  var date=response.date;
+  var quality=data.quality;
+  var temperature=data.wendu;
+  var weather=data.forcast[0].type;
+  $('#date').text(date);
+  $('#weather').text(weather);
+  $('#quality').text(quality);
+  $('#temperature').text(temperature);
+}).error(function(){console.log('error')});
