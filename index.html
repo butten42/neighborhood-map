@@ -14,6 +14,15 @@
          <span class="icon"></span>
          <span class="icon"></span>
          </button>
+         <b>Today's weather</b>
+         <label>Date:</label>
+         <span id="date"></span>
+         <label>quality:</label>
+         <span id="quality"></span>
+         <label>Temperature:</label>
+         <span id="temperature"></span>
+         <label>Weather:</label>
+         <span id="weather"></span>
       </nav>
       <div id="place-box" class='collapse'>
         <div class="wrap">
@@ -30,28 +39,9 @@
         </div>
       </div>
       <div id="map"></div>
-      <div id="iconModal" class="modal fade">
-         <div class="modal-dialog modal-sm">
-            <div class="modal-content">
-               <div class="modal-header">
-                  <h3 class="modal-title">Choose a source</h3>
-               </div>
-               <div class="modal-body">
-                  <p>Well, if you are currently in China...</p>
-               </div>
-               <div class="modal-footer">
-                  <button type="button" class="btn btn-default" data-dismiss="modal" id="leftButton">Google</button>
-                  <button type="button" class="btn btn-default" data-dismiss="modal" id="rightButton">Baidu</button>
-               </div>
-            </div>
-            <!-- /.modal-content -->
-         </div>
-         <!-- /.modal-dialog -->
-      </div>
-    <script src='js/lib/jquery.min.js'></script>
     <script src='js/lib/knockout-3.2.0.js'></script>
+    <script src='js/lib/jquery.min.js'></script>
     <script src='js/lib/bootstrap.min.js'></script>
     <script src='js/main.js'></script>
-
    </body>
 </html>

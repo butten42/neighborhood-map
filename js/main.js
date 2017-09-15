@@ -1,14 +1,3 @@
-$('#iconModal').modal({
-show: true,
-backdrop: false
-});
-
-$('#leftButton').click(function(){
-$('#iconModal').modal('hide');
-});
-$('#rightButton').click(function(){
-$('#iconModal').modal('hide');
-});
 var map;
 var marker;
 var markers = [];
@@ -111,4 +100,20 @@ var ViewModel = function(){
     });
   });
 }
+var url="http://www.sojson.com/open/api/weather/json.shtml?city=深圳";
 
+$.ajax({
+        url: url,
+
+        dataType: "jsonp"
+    }).done(function(response){
+  var data=response.data;
+  var date=response.date;
+  var quality=data.quality;
+  var temperature=data.wendu;
+  var weather=data.forcast[0].type;
+  $('#date').text(date);
+  $('#weather').text(weather);
+  $('#quality').text(quality);
+  $('#temperature').text(temperature);
+    })
