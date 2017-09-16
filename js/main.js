@@ -100,30 +100,20 @@ var ViewModel = function(){
     });
   });
 }
-var url="http://www.sojson.com/open/api/weather/json.shtml?city=深圳";
+var url="http://tj.nineton.cn/Heart/index/all?city=CHGD050000";
 
-/*$.ajax({
+$.ajax({
         url: url,
-        dataType: "jsonp"
+        dataType: "json",
     }).done(function(response){
-  var data=response.data;
-  var date=response.date;
-  var quality=data.quality;
-  var temperature=data.wendu;
-  var weather=data.forcast[0].type;
-  $('#date').text(date);
+      console.log(response)
+  var data=response.weather[0];
+  var update=data.last_update;
+  var quality=data.now.air_quality.city.quality;
+  var temperature=data.now.temperature+' C';
+  var weather=data.now.text;
+  $('#date').text(update);
   $('#weather').text(weather);
   $('#quality').text(quality);
   $('#temperature').text(temperature);
-    })*/
-$.getJSON(url,function(response){
-var data=response.data;
-  var date=response.date;
-  var quality=data.quality;
-  var temperature=data.wendu;
-  var weather=data.forcast[0].type;
-  $('#date').text(date);
-  $('#weather').text(weather);
-  $('#quality').text(quality);
-  $('#temperature').text(temperature);
-}).error(function(){console.log('error')});
+})
