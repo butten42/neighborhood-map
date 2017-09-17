@@ -1,4 +1,3 @@
-
 function initMap() {
   var SZ = {
     lat: 22.5549176,

@@ -1,17 +1,6 @@
-.modal-dialog {
-    border: transparent;
+body{
+    margin:0;
 }
-
-.modal-footer {
-    text-align: center;
-    border: transparent;
-}
-
-.modal-header {
-    background: #4caf50;
-    color: white;
-}
-
 #map {
     height: 100%;
     top: 54px;
@@ -29,6 +18,7 @@
     color: white;
     z-index: 2;
     position: relative;
+    display: none;
 }
 
 #searchText {
@@ -59,13 +49,14 @@
 nav {
     background: #4caf50;
     color: white;
+    height: 54px;
 }
 
 #brand {
     font-style: italic;
     margin-right: 10px;
 }
-label{
+label {
     font-size: 18px;
 }
 .wrap {

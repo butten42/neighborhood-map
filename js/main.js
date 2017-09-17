@@ -1,3 +1,4 @@
+// make a global variable
 var map;
 var marker;
 var markers = [];
@@ -62,15 +63,18 @@ var locations = [{
       placeId: 'ChIJr5fS66t1BDQR8dpM0UXx7r8'
     }
   ];
+// load the script
 function loadScript(url){
     var Script = document.createElement('script');
     Script.setAttribute('src', url);
     document.body.appendChild(Script);
 }
+// make the script
 var googleScript='js/google.js';
 var googleUrl="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyAREfcIaFiSSJ81sB884G9GvdNqp6Y_FjE&v=3&callback=initMap";
 loadScript(googleScript);
-loadScript(googleUrl);
+loadScript(googleUrl); // abandoned the baidu map api script
+// make the Lacation class
 var Location=function(data){
     this.title = data.title;
     this.tel= data.tel;
@@ -78,7 +82,7 @@ var Location=function(data){
     this.marker=data.marker;
     this.match=data.match;
 }
-
+// the google map VM
 var ViewModel = function(){
     var self=this;
     this.locationList=ko.observableArray([]);
@@ -100,6 +104,7 @@ var ViewModel = function(){
     });
   });
 }
+// the weather api
 var url='http://api.openweathermap.org/data/2.5/forecast?id=1795563&APPID=85e225488d40b7a1d9ee47e76182d245'
 $.ajax({
         url: url,
@@ -115,3 +120,7 @@ $.ajax({
   $('#humidity').text(humidity);
   $('#temperature').text(temperature);
 })
+// toggle to show/hide the placebox
+$('#toggleButton').click(function(){
+  $('#place-box').toggle();
+});
