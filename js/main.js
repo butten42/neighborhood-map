@@ -124,3 +124,10 @@ $.ajax({
 $('#toggleButton').click(function(){
   $('#place-box').toggle();
 });
+//
+function mapError(){
+  alert("failed to load the map, please try a VPN.");
+}
+if(typeof google === 'undefined'){
+  mapError();
+}
