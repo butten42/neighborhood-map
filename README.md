@@ -54,6 +54,7 @@ the indexof to find the one who is match.
 **the CROS**
 > I just use the jquery ajax to get the json but return an `Uncaught SyntaxError: Unexpected token:`
 due to the callback wants to return a function but it just return a json.but if I just use the json instead of jsonp,I get a CROS
+
 > change an API
 ### Done
 * the feature
@@ -64,7 +65,7 @@ due to the callback wants to return a function but it just return a json.but if 
 - jQuery
 ### Used APIs
 - Google map
-- weather
+- openweather
 
 
 
