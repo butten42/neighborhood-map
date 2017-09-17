@@ -100,20 +100,18 @@ var ViewModel = function(){
     });
   });
 }
-var url="http://tj.nineton.cn/Heart/index/all?city=CHGD050000";
-
+var url='http://api.openweathermap.org/data/2.5/forecast?id=1795563&APPID=85e225488d40b7a1d9ee47e76182d245'
 $.ajax({
         url: url,
         dataType: "json",
     }).done(function(response){
-      console.log(response)
-  var data=response.weather[0];
-  var update=data.last_update;
-  var quality=data.now.air_quality.city.quality;
-  var temperature=data.now.temperature+' C';
-  var weather=data.now.text;
+  var data=response.list[0];
+  var update=data.dt_txt;
+  var humidity=data.main.humidity;
+  var temperature=(data.main.temp-273.15).toFixed(1)+'°C';
+  var weather=data.weather[0].main;
   $('#date').text(update);
   $('#weather').text(weather);
-  $('#quality').text(quality);
+  $('#humidity').text(humidity);
   $('#temperature').text(temperature);
 })

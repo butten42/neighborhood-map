@@ -58,8 +58,16 @@
 
 nav {
     background: #4caf50;
+    color: white;
 }
 
+#brand {
+    font-style: italic;
+    margin-right: 10px;
+}
+label{
+    font-size: 18px;
+}
 .wrap {
     margin-left: 10px;
 }
