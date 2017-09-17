@@ -18,7 +18,7 @@ could be a simple one but...
 3. need to show the list of locations in asidelist box
 4. while we click the entry in the location box the marker will center and show it's infowindow
 5. search/fliter the locations hide the unlikes
-6. in the begining can choose the source
+6. ~~in the begining can choose the source~~ (baidu sucks! changed by a weatehr forecast)
 7. responsiveness
 
 ### What's the problem and how to overcome
@@ -39,18 +39,32 @@ you have two way to get the details:`service.getDetails`  `service.textSearch`
 `https://maps.googleapis.com/maps/api/place/details/json?placeid=ChIJN1t_tDeuEmsRUsoyG83frY4&key=YOUR_API_KEY`
 
 **But when I just want to use the getDetails in google api the 'google is not defined' error occurs**
-> yes I give up
-### Done
+> yes I don't know why and finally just mamully add the infomaition into the model
 
+**Add the trigger at the list**
+> add the marker into the model and use the `google.maps.event.trigger(elem.marker, "click");`
+
+**make the filter works**
+> it works by use bind the visible into the model and in the html we put a `data-bind="textInput: query"` in the textbox.for each view we put a match,use the `ko.utils.arrayFilter` to get the match,
+the indexof to find the one who is match.
+
+**the other api**
+> I was going to use another map api called baidu but faced tons of hard things so I decide just use an weather api,and I can't use most of Chinese company's api for the policy in china so I use the openweather api
+
+**the CROS**
+> I just use the jquery ajax to get the json but return an `Uncaught SyntaxError: Unexpected token:`
+due to the callback wants to return a function but it just return a json.but if I just use the json instead of jsonp,I get a CROS
+> change an API
+### Done
+* the feature
+* the function
+* third party API
 ### Used Libs
 - Knockout
 - jQuery
-- Bootstrap
 ### Used APIs
 - Google map
 - weather
-- Baidu map(TODO)
-### TODO
-- scrollbar
+
 
 
