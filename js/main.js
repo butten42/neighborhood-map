@@ -128,6 +128,3 @@ $('#toggleButton').click(function(){
 function mapError(){
   alert("failed to load the map, please try a VPN.");
 }
-if(typeof google === 'undefined'){
-  mapError();
-}

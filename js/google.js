@@ -30,7 +30,9 @@ function initMap() {
   }
   showListings();
 ko.applyBindings(new ViewModel());
-
+if(typeof google === 'undefined'){
+  mapError();
+}
 }
 function populateInfoWindow(marker, infowindow) {
   var service = new google.maps.places.PlacesService(map);
